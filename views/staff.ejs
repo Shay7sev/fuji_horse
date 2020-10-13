@@ -1,0 +1,113 @@
+<div class="container-fluid">
+  <h4 class="page-title">操作员管理</h4>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">操作员列表</div>
+        </div>
+        <div class="card-body">
+          <table class="table table-head-bg-success table-hover">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">用户名</th>
+              <th scope="col">角色</th>
+              <th scope="col">密码</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for (var i=0; i<staff.length; i++) {%>
+            <tr onclick="modifyRow(<%= JSON.stringify(staff[i])%>)">
+              <td><%= i+1%></td>
+              <td><%= staff[i].name%></td>
+              <td><%= staff[i].role%></td>
+              <td><%= staff[i].password%></td>
+            </tr>
+            <% }%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <button class="btn btn-primary" onclick="addRow()">+添加管理员</button>
+    </div>
+    <div class="col-md-6">
+      <button class="btn btn-warning" onclick="generateExcel()">导出excel</button>
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="modify">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="nickname">用户名</label>
+            <input type="text" class="form-control" id="name" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="openid">角色</label>
+            <input type="text" class="form-control" id="role" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="age">密码</label>
+            <input type="text" class="form-control" id="password" placeholder="">
+          </div>
+          <input type="hidden" id="id">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消更改</button>
+        <button type="button" class="btn btn-primary" onclick="saveChange()">保存更改</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function modifyRow(json) {
+    $('#name').val(json.name);
+    $('#role').val(json.role);
+    $('#password').val(json.password);
+    $('.modal-title').text('修改管理员')
+    $('#modify').modal('show');
+  }
+  function addRow() {
+    $('.modal-title').text('添加管理员');
+    $('#modify').modal('show');
+  }
+  function saveChange() {
+    var id = $('#id').val();
+    var form = {
+      name: $('#name').val(),
+      role: $('#role').val(),
+      password: $('#password').val()
+    }
+    if (typeof id != 'undefined') {
+      $.post('/staff/'+id, form, function(data, status) {
+        if (data.status == 'ok') {
+          alert('修改成功！');
+          setTimeout(function () {
+            window.location.reload();
+          }, 1000);
+        }
+      })
+    } else {
+        $.post('/staff', form, function (data, status) {
+          if (data.status == 'ok') {
+              alert('添加成功！');
+              setTimeout(function () {
+                window.location.reload();
+              }, 1000);
+          }
+        })
+    }
+  }
+</script>

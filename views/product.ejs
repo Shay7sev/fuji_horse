@@ -1,0 +1,235 @@
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+<div class="container-fluid">
+  <h4 class="page-title">商品管理</h4>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">商品列表</div>
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-head-bg-success table-hover">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">商品名</th>
+              <th scope="col">类别</th>
+              <th scope="col">价格</th>
+              <th scope="col">详情</th>
+              <th scope="col">缩略图</th>
+              <th scope="col">主图</th>
+              <th scope="col">详情图</th>
+              <th scope="col">促销</th>
+              <th scope="col">滚动播放</th>
+              <th scope="col">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for (var i=0; i<products.length; i++) {%>
+            <tr>
+              <td><%= i+1%></td>
+              <td><%= products[i].name%></td>
+              <td><%= products[i].category%></td>
+              <td><%= products[i].price%></td>
+              <td><%= products[i].detail%></td>
+              <td><%= products[i].picThumb%></td>
+              <td><%= products[i].picMain%></td>
+              <td><%= products[i].picDetail%></td>
+              <td><%= products[i].promotion%></td>
+              <td><%= products[i].carousel%></td>
+              <td>
+                <button type="button" class="btn btn-danger" onclick="deleteProduct('<%= products[i].id%>')">删除</button>
+                <button type="button" class="btn btn-primary" onclick="modifyRow(<%= JSON.stringify(products[i])%>)">修改</button>
+              </td>
+            </tr>
+            <% }%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <button class="btn btn-primary" onclick="addRow()">+添加商品</button>
+      <button class="btn btn-warning" onclick="generateExcel()">导出excel</button>
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="modify">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="nickname">商品名</label>
+            <input type="text" class="form-control" id="name" placeholder="" name="name">
+          </div>
+          <div class="form-group">
+            <label for="openid">类别</label>
+            <input type="text" class="form-control" id="category" placeholder="" name="category">
+          </div>
+          <div class="form-group">
+            <label for="age">价格</label>
+            <input type="number" class="form-control" id="price" placeholder="" name="price">
+          </div>
+          <div class="form-group">
+            <label for="city">详情</label>
+            <div id="editor"></div>
+          </div>
+          <div class="form-group">
+            <label for="phone">缩略图</label>
+            <input type="file" class="form-control" id="pic-thumb" placeholder="" name="picThumb">
+          </div>
+          <div class="form-group">
+            <label for="phone">主要图</label>
+            <input type="file" class="form-control" id="pic-main" placeholder="" name="picMain">
+          </div>
+          <div class="form-group">
+            <label for="phone">详情图</label>
+            <input type="file" class="form-control" id="pic-detail" placeholder="" name="picDetail">
+          </div>
+          <div class="form-check">
+            <label>是否作为促销商品</label><br/>
+            <label class="form-radio-label">
+              <input class="form-radio-input" type="radio" name="promotion" value="0"  checked="">
+              <span class="form-radio-sign">否</span>
+            </label>
+            <label class="form-radio-label ml-3">
+              <input class="form-radio-input" type="radio" name="promotion" value="1">
+              <span class="form-radio-sign">是</span>
+            </label>
+          </div>
+          <div class="form-check">
+            <label>是否作为滚动大图</label><br/>
+            <label class="form-radio-label">
+              <input class="form-radio-input" type="radio" name="carousel" value="0"  checked="">
+              <span class="form-radio-sign">否</span>
+            </label>
+            <label class="form-radio-label ml-3">
+              <input class="form-radio-input" type="radio" name="carousel" value="1">
+              <span class="form-radio-sign">是</span>
+            </label>
+          </div>
+          <input type="hidden" id="product-id" value="0">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消更改</button>
+        <button type="button" class="btn btn-primary" onclick="saveChange()">保存更改</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script>
+  var quill = new Quill('#editor', {
+    theme: 'snow'
+  });
+</script>
+<script>
+  function modifyRow(json) {
+    $('#name').val(json.name);
+    $('#category').val(json.category);
+    $('#price').val(json.price);
+    $('.ql-editor').html(json.detail);
+    $('.modal-title').text('修改商品');
+    $('#product-id').val(json.id);
+    $('input[name="promotion"][value="'+json.promotion+'"]').attr('checked', 'true');
+    $('input[name="carousel"][value="'+json.carousel+'"]').attr('checked', 'true');
+    $('#modify').modal('show');
+  }
+  function addRow() {
+    $('.modal-title').text('添加商品');
+    $('#modify').modal('show');
+  }
+  function deleteProduct(id) {
+    $.ajax({
+      url: 'https://hm.fujifilm.com.cn/product/'+id,
+      type: 'DELETE',
+      contentType: "application/json",
+      success: function (res) {
+        console.log(res);
+        if (res.message == 'ok') {
+          alert('删除成功！');
+          setTimeout(function () {
+            window.location.reload();
+          }, 1000);
+        }
+      }
+    })
+  }
+  function generateExcel() {
+    var table = 'product';
+    $.get('/gen_xlsx?table='+table, function (data) {
+      console.log(data);
+      alert('即将下载');
+      setTimeout(function () {
+        window.location.href = 'https://hm.fujifilm.com.cn/xlsx/'+data.file_path;
+      }, 4000);
+    })
+  }
+  function saveChange() {
+    var id = $('#product-id').val();
+    var form = {
+      name: $('#name').val(),
+      category: $('#category').val(),
+      price: $('#price').val(),
+      detail: $('.ql-editor').html(),
+      promotion: $('input[name="promotion"]:checked').val(),
+      carousel: $('input[name="carousel"]:checked').val()
+    }
+    var form_data = new FormData();
+    console.log($('#pic-thumb')[0].files[0]);
+    form_data.append('picThumb', $('#pic-thumb')[0].files[0]);
+    form_data.append('picMain', $('#pic-main')[0].files[0]);
+    form_data.append('picDetail', $('#pic-detail')[0].files[0]);
+    form_data.append('name', $('#name').val());
+    form_data.append('category', $('#category').val());
+    form_data.append('detail', $('.ql-editor').html());
+    form_data.append('price', $('#price').val());
+    form_data.append('promotion', $('input[name="promotion"]:checked').val());
+    form_data.append('carousel', $('input[name="carousel"]:checked').val());
+    console.log(form_data.get('picMain'));
+    if (id == '0') {
+      $.ajax({
+        url: '/upload_product',
+        type: 'post',
+        data: form_data,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+          console.log(res);
+          if (res == 'ok') {
+              alert('添加成功!');
+              window.location.reload();
+          }
+        }
+      })
+//      $.post('/product', form, function (data, status) {
+//        if (data.status == 'ok') {
+//            alert('添加成功！');
+//            setTimeout(function () {
+//              window.location.reload();
+//            }, 1000);
+//        }
+//      })
+    } else {
+      $.post('/product/'+id, form, function(data, status) {
+        if (data.status == 'ok') {
+          alert('修改成功！');
+          setTimeout(function () {
+            window.location.reload();
+          }, 1000);
+        }
+      })
+    }
+  }
+
+</script>

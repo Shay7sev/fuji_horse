@@ -1,0 +1,34 @@
+<!-- contact-form -->
+<div class="message warning">
+  <div class="inset">
+    <div class="login-head">
+      <h1>富士影像管理后台</h1>
+      <div class="alert-close"> </div>
+    </div>
+    <form method="post" action="/auth">
+      <li>
+        <input type="text" class="text" name="name" value="Username" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Username';}"><a href="#" class=" icon user"></a>
+      </li>
+      <div class="clear"> </div>
+      <li>
+        <input type="password" name="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}"> <a href="#" class="icon lock"></a>
+      </li>
+      <div class="clear"> </div>
+      <div class="submit">
+        <input type="submit" value="Sign in" >
+        <h4><a href="#">Lost your Password ?</a></h4>
+        <div class="clear">  </div>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+<div class="clear"> </div>
+<!--- footer --->
+<div class="footer">
+ <a href="itms-services://?action=download-manifest&url=https://hm.fujifilm.com.cn/app/manifest.plist"> <p>Copyright &copy; 2019.</p></a></div>
+<% if (error == 'failed') {%>
+<script>
+  alert('authentication failed')
+</script>
+<% }%>

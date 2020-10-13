@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fuji Film Managing Center</title>
+
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	  <link rel="stylesheet" href="/css/bootstrap.min.css">
+	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+	  <link rel="stylesheet" href="/css/ready.css">
+	  <link rel="stylesheet" href="/css/demo.css">
+
+  </head>
+
+  <body>
+  <!--SCRIPTS-->
+  <script src="/js/dependencies/sails.io.js"></script>
+  <script src="/js/core/jquery.3.2.1.min.js"></script>
+  <script src="/js/core/bootstrap.min.js"></script>
+  <script src="/js/bootstrap-wysihtml5-0.0.2.min.js"></script>
+  <script src="/js/bootstrap-wysiwyg.js"></script>
+  <script src="/js/core/popper.min.js"></script>
+  <script src="/js/demo.js"></script>
+  <script src="/js/jquery.notebook.js"></script>
+  <script src="/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+  <script src="/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+  <script src="/js/plugin/chart-circle/circles.min.js"></script>
+  <script src="/js/plugin/chartist/chartist.min.js"></script>
+  <script src="/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
+  <script src="/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
+  <script src="/js/plugin/jquery-mapael/maps/france_departments.js"></script>
+  <script src="/js/plugin/jquery-mapael/maps/france_departments.min.js"></script>
+  <script src="/js/plugin/jquery-mapael/maps/usa_states.js"></script>
+  <script src="/js/plugin/jquery-mapael/maps/usa_states.min.js"></script>
+  <script src="/js/plugin/jquery-mapael/maps/world_countries_mercator.js"></script>
+  <script src="/js/plugin/jquery-mapael/maps/world_countries_mercator.min.js"></script>
+  <script src="/js/plugin/jquery-mapael/maps/world_countries_miller.js"></script>
+  <script src="/js/plugin/jquery-mapael/maps/world_countries_miller.min.js"></script>
+  <script src="/js/plugin/jquery-mapael/maps/world_countries.js"></script>
+  <script src="/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
+  <script src="/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+  <script src="/js/ready.js"></script>
+  <script src="/js/ready.min.js"></script>
+  <script src="/js/wysihtml5-0.3.0_rc2.min.js"></script>
+  <!--SCRIPTS END-->
+  <script src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>
+  <div class="wrapper">
+    <div class="main-header">
+      <div class="logo-header">
+        <a href="/admin" class="logo">
+          富士影像后台管理系统
+        </a>
+        <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
+      </div>
+      <nav class="navbar navbar-header navbar-expand-lg">
+        <div class="container-fluid">
+
+          <form class="navbar-left navbar-form nav-search mr-md-3" action="/search">
+            <div class="input-group">
+              <input type="text" placeholder="Search ..." class="form-control" name="q">
+              <div class="input-group-append">
+								<span class="input-group-text">
+									<i class="la la-search search-icon"></i>
+								</span>
+              </div>
+            </div>
+          </form>
+          <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+            <li class="nav-item dropdown hidden-caret">
+              <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="dbBackup()">
+                <i class="la la-cog"></i>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown hidden-caret">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="la la-bell"></i>
+                <span class="notification"></span>
+              </a>
+              <ul class="dropdown-menu notif-box" aria-labelledby="navbarDropdown">
+                <li>
+                  <div class="dropdown-title"></div>
+                </li>
+                <li>
+                  <div class="notif-center">
+                  </div>
+                </li>
+                <li>
+                  <a class="see-all" href="javascript:void(0);"> <strong>See all notifications</strong> <i class="la la-angle-right"></i> </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="/assets/img/profile.jpg" alt="user-img" width="36" class="img-circle"><span >Admin</span></span> </a>
+              <ul class="dropdown-menu dropdown-user">
+                <li>
+                  <div class="user-box">
+                    <div class="u-img"><img src="/assets/img/profile.jpg" alt="user"></div>
+                    <div class="u-text">
+                      <h4>Admin</h4>
+                      <p class="text-muted"></p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm"></a></div>
+                  </div>
+                </li>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#"><i class="ti-user"></i> My Profile</a>
+                <a class="dropdown-item" href="#"></i> My Balance</a>
+                <a class="dropdown-item" href="#"><i class="ti-email"></i> Inbox</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#"><i class="ti-settings"></i> Account Setting</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> Logout</a>
+              </ul>
+              <!-- /.dropdown-user -->
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="sidebar">
+      <div class="scrollbar-inner sidebar-wrapper">
+        <div class="user">
+          <div class="photo">
+            <img src="assets/img/profile.jpg">
+          </div>
+          <div class="info">
+            <a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+								<span>
+									ADMIN
+									<span class="user-level">Administrator</span>
+									<span class="caret"></span>
+								</span>
+            </a>
+            <div class="clearfix"></div>
+
+            <div class="collapse in" id="collapseExample" aria-expanded="true" style="">
+              <ul class="nav">
+                <li>
+                  <a href="#profile">
+                    <span class="link-collapse">My Profile</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#edit">
+                    <span class="link-collapse">Edit Profile</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#settings">
+                    <span class="link-collapse">Settings</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <ul class="nav">
+          <li class="nav-item active">
+            <a href="/admin">
+              <i class="la la-dashboard"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/customers">
+              <i class="la la-users"></i>
+              <p>用户管理</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/orders">
+              <i class="la la-keyboard-o"></i>
+              <p>订单管理</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/products">
+              <i class="la la-gift"></i>
+              <p>商品管理</p>
+            </a>
+          </li>
+          <!--<li class="nav-item">-->
+            <!--<a href="/admin/reports">-->
+              <!--<i class="la la-list-alt"></i>-->
+              <!--<p>报告管理</p>-->
+            <!--</a>-->
+          <!--</li>-->
+          <li class="nav-item">
+            <a href="/admin/invoices">
+              <i class="la la-envelope"></i>
+              <p>发票管理</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/staff">
+              <i class="la la-user"></i>
+              <p>人员管理</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/banner">
+              <i class="la la-user"></i>
+              <p>滚动条管理</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <div class="content">
+    <%- body %>
+      </div>
+      <footer class="footer">
+        <div class="container-fluid">
+          <nav class="pull-left">
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  ThemeKita
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  Help
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#license/#free-item">
+                  Licenses
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div class="copyright ml-auto">
+            2018, made with Stramo, visit <a href="https://www.stramogroup.com">www.stramogroup.com</a>, for a better world
+        </div>
+      </footer>
+    </div>
+  </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePro" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h6 class="modal-title"><i class="la la-frown-o"></i> Under Development</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          <p>Currently the pro version of the <b>Ready Dashboard</b> Bootstrap is in progress development</p>
+          <p>
+            <b>We'll let you know when it's done</b></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    <!--
+        Client-side Templates
+        ========================
+
+        HTML templates are important prerequisites of modern, rich client applications.
+        To work their magic, frameworks like Backbone, Angular, Ember, and Knockout require
+        that you load these templates client-side.
+
+        By default, your Gruntfile is configured to automatically load and precompile
+        client-side JST templates in your `assets/templates` folder, then
+        include them here automatically (between TEMPLATES and TEMPLATES END).
+
+        To customize this behavior to fit your needs, just edit `tasks/pipeline.js`.
+        For example, here are a few things you could do:
+
+            + Import templates from other directories
+            + Use a different template engine (handlebars, jade, dust, etc.)
+            + Internationalize your client-side templates using a server-side
+              stringfile before they're served.
+    -->
+
+    <!--TEMPLATES-->
+    <script type="text/javascript" src="/jst.js"></script>
+    <!--TEMPLATES END-->
+
+
+    <!--
+
+      Client-side Javascript
+      ========================
+
+  
