@@ -40,13 +40,13 @@ module.exports.connections = {
   * Run: npm install sails-mysql                                             *
   *                                                                          *
   ***************************************************************************/
-   aliyun: {
-     adapter: 'sails-mysql',
-     host: '118.31.41.96',
-     user: 'root', //optional
-     password: '8Uhb9ijn', //optional
-     database: 'fuji' //optional
-   },
+  aliyun: {
+    adapter: 'sails-mysql',
+    host: '118.31.41.96',
+    user: 'root', //optional
+    password: '8Uhb9ijn', //optional
+    database: 'fuji' //optional
+  },
 
   tencent: {
     adapter: 'sails-mysql',
@@ -54,7 +54,15 @@ module.exports.connections = {
     user: 'root',
     password: '8Uhb9ijn',
     database: 'fuji'
-  }
+  },
+
+  localsql: {
+    adapter: 'sails-mysql',
+    host: 'localhost',
+    user: 'root',
+    password: 'root1234',
+    database: 'horse'
+  },
 
   /***************************************************************************
   *                                                                          *

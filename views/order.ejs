@@ -9,74 +9,81 @@
         <div class="card-body table-responsive" style="height: 500px;">
           <table class="table table-head-bg-success table-hover table-condensed text-nowrap">
             <thead>
-            <tr>
-              <th scope="col">订单号</th>
-              <th scope="col">商品名</th>
-              <th scope="col">用户ID</th>
-              <th scope="col">用户昵称</th>
-              <th scope="col">状态</th>
-              <th scope="col">发票ID</th>
-              <th scope="col">马匹信息</th>
-              <th scope="col">收货地址</th>
-              <th scope="col">总价</th>
-              <th scope="col">创建时间</th>
-              <th scope="col">更新时间</th>
-              <th scope="col">操作</th>
-            </tr>
+              <tr>
+                <th scope="col">订单号</th>
+                <th scope="col">商品名</th>
+                <th scope="col">用户ID</th>
+                <th scope="col">用户昵称</th>
+                <th scope="col">状态</th>
+                <th scope="col">发票ID</th>
+                <th scope="col">马匹信息</th>
+                <th scope="col">收货地址</th>
+                <th scope="col">总价</th>
+                <th scope="col">创建时间</th>
+                <th scope="col">更新时间</th>
+                <th scope="col">操作</th>
+              </tr>
             </thead>
             <tbody>
-            <% for (var i=0; i<orders.length; i++) {%>
-            <% if(orders[i].address.length >0 || orders[i].horses.length>0){%>
-            <% var count = orders[i].address.length>=orders[i].horses.length?orders[i].address.length:orders[i].horses.length;%>
-            <% for(var j=0; j<count; j++){%>
-            <tr>
-              <td><%= orders[i].id%></td>
-              <td><%= orders[i].productId%></td>
-              <td><%= orders[i].customerId%></td>
-              <td><%= orders[i].customer[0].nickname%></td>
-              <td><%= orders[i].status%></td>
-              <td><%= orders[i].invoiceId%></td>
-              <td>
-                <%= orders[i].horses[j]?orders[i].horses[j]:'无马匹信息'%>
-              </td>
-              <td>
-                <%= orders[i].address[j]?orders[i].address[j]:'无地址信息'%>
-              </td>
-              <td><%= orders[i].total%></td>
-              <td><%= orders[i].createTime%></td>
-              <td><%= orders[i].updateTime%></td>
-              <td>
-                <button type="button" class="btn btn-danger" onclick="deleteOrder('<%= orders[i].vid%>')">删除</button>
-                <button type="button" class="btn btn-primary" onclick="modifyRow(<%= JSON.stringify(orders[i])%>)">修改</button>
-                <button type="button" class="btn btn-success" onclick="addReport(<%= JSON.stringify(orders[i])%>)">报告</button>
-              </td>
-            </tr>
-            <% }%>
-            <% } else {%>
-            <tr>
-              <td><%= orders[i].id%></td>
-              <td><%= orders[i].productId%></td>
-              <td><%= orders[i].customerId%></td>
-              <td><%= orders[i].customer[0].nickname%></td>
-              <td><%= orders[i].status%></td>
-              <td><%= orders[i].invoiceId%></td>
-              <td>
-                无马匹信息
-              </td>
-              <td>
-                无地址信息
-              </td>
-              <td><%= orders[i].total%></td>
-              <td><%= orders[i].createTime%></td>
-              <td><%= orders[i].updateTime%></td>
-              <td>
-                <button type="button" class="btn btn-danger" onclick="deleteOrder('<%= orders[i].vid%>')">删除</button>
-                <button type="button" class="btn btn-primary" onclick="modifyRow(<%= JSON.stringify(orders[i])%>)">修改</button>
-                <button type="button" class="btn btn-success" onclick="addReport(<%= JSON.stringify(orders[i])%>)">报告</button>
-              </td>
-            </tr>
-            <% }%>
-            <% }%>
+              <% for (var i=0; i<orders.length; i++) {%>
+              <% if(orders[i].address.length >0 || orders[i].horses.length>0){%>
+              <% var count = orders[i].address.length>=orders[i].horses.length?orders[i].address.length:orders[i].horses.length;%>
+              <% for(var j=0; j<count; j++){%>
+              <tr>
+                <td><%= orders[i].id%></td>
+                <td><%= orders[i].productId%></td>
+                <td><%= orders[i].customerId%></td>
+                <td>
+                  <% if(orders[i].customer[0].nickname!==null){ %>
+                  <%= orders[i].customer[0].nickname%>
+                  <% } %>
+                </td>
+                <td><%= orders[i].status%></td>
+                <td><%= orders[i].invoiceId%></td>
+                <td>
+                  <%= orders[i].horses[j]?orders[i].horses[j]:'无马匹信息'%>
+                </td>
+                <td>
+                  <%= orders[i].address[j]?orders[i].address[j]:'无地址信息'%>
+                </td>
+                <td><%= orders[i].total%></td>
+                <td><%= orders[i].createTime%></td>
+                <td><%= orders[i].updateTime%></td>
+                <td>
+                  <button type="button" class="btn btn-danger" onclick="deleteOrder('<%= orders[i].vid%>')">删除</button>
+                  <button type="button" class="btn btn-primary"
+                    onclick="modifyRow(<%= JSON.stringify(orders[i])%>)">修改</button>
+                  <button type="button" class="btn btn-success"
+                    onclick="addReport(<%= JSON.stringify(orders[i])%>)">报告</button>
+                </td>
+              </tr>
+              <% }%>
+              <% } else {%>
+              <tr>
+                <td><%= orders[i].id%></td>
+                <td><%= orders[i].productId%></td>
+                <td><%= orders[i].customerId%></td>
+                <td><%= orders[i].status%></td>
+                <td><%= orders[i].invoiceId%></td>
+                <td>
+                  无马匹信息
+                </td>
+                <td>
+                  无地址信息
+                </td>
+                <td><%= orders[i].total%></td>
+                <td><%= orders[i].createTime%></td>
+                <td><%= orders[i].updateTime%></td>
+                <td>
+                  <button type="button" class="btn btn-danger" onclick="deleteOrder('<%= orders[i].vid%>')">删除</button>
+                  <button type="button" class="btn btn-primary"
+                    onclick="modifyRow(<%= JSON.stringify(orders[i])%>)">修改</button>
+                  <button type="button" class="btn btn-success"
+                    onclick="addReport(<%= JSON.stringify(orders[i])%>)">报告</button>
+                </td>
+              </tr>
+              <% }%>
+              <% }%>
             </tbody>
           </table>
         </div>
@@ -98,18 +105,18 @@
         <input type="hidden" id="report-customer-id" name="openid">
         <input type="hidden" id="report-address-id" name="addressId">
         <input type="hidden" id="report-file-array" name="file_array">
-      <div class="modal-header">
-        <h4 class="modal-title">增加报告</h4>
-      </div>
-      <div class="modal-body">
-        <div id="file-container">
-
+        <div class="modal-header">
+          <h4 class="modal-title">增加报告</h4>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消更改</button>
-        <button type="submit" class="btn btn-primary">保存更改</button>
-      </div>
+        <div class="modal-body">
+          <div id="file-container">
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消更改</button>
+          <button type="submit" class="btn btn-primary">保存更改</button>
+        </div>
       </form>
     </div>
   </div>
@@ -178,22 +185,22 @@
 <script>
   function addReport(json) {
     console.log(json);
-    var tpl = '<div class="form-group">'+
-              '<label for="nickname">上传报告: param0</label>'+
-              '<input type="file" class="form-control" placeholder="" name="report_param0">'+
-              '</div>';
+    var tpl = '<div class="form-group">' +
+      '<label for="nickname">上传报告: param0</label>' +
+      '<input type="file" class="form-control" placeholder="" name="report_param0">' +
+      '</div>';
     var p_list = JSON.parse(json.productId);
     var a_list = JSON.parse(json.amount);
     var h_list = json.horses;
     var html = '';
     var file_array = [];
-    for(var i=0; i<p_list.length; i++) {
-        for(var j=0; j<a_list[i]; j++){
-            var horse_name = h_list[j].name;
-            var tpl_0 = tpl.replace(/param0/g, p_list[i]+'_'+j+'_'+horse_name);
-            file_array.push(p_list[i]+'_'+j+'_'+horse_name);
-            html += tpl_0;
-        }
+    for (var i = 0; i < p_list.length; i++) {
+      for (var j = 0; j < a_list[i]; j++) {
+        var horse_name = h_list[j].name;
+        var tpl_0 = tpl.replace(/param0/g, p_list[i] + '_' + j + '_' + horse_name);
+        file_array.push(p_list[i] + '_' + j + '_' + horse_name);
+        html += tpl_0;
+      }
     }
     console.log(file_array);
     $('#file-container').html(html);
@@ -204,9 +211,9 @@
   }
   function saveReport() {
     var form = {
-        link: $('#report').val(),
-        orderId: $('#order-id').val(),
-        customerId: $('#customer-id').val()
+      link: $('#report').val(),
+      orderId: $('#order-id').val(),
+      customerId: $('#customer-id').val()
     };
     var form_data = new FormData();
     $.ajax({
@@ -221,11 +228,11 @@
       }
     })
     $.post("/report", form, function (data, status) {
-        console.log(data);
-        if (data.message == 'ok') {
-            alert('添加报告成功!');
-            window.location.reload();
-        }
+      console.log(data);
+      if (data.message == 'ok') {
+        alert('添加报告成功!');
+        window.location.reload();
+      }
     })
   }
   function modifyRow(json) {
@@ -243,7 +250,7 @@
   }
   function deleteOrder(id) {
     $.ajax({
-      url: '/order/'+id,
+      url: '/order/' + id,
       type: 'DELETE',
       contentType: 'application/json',
       success: function (res) {
@@ -257,34 +264,34 @@
   }
   function generateExcel() {
     var table = 'order';
-    $.get('/gen_xlsx?table='+table, function (data) {
+    $.get('/gen_xlsx?table=' + table, function (data) {
       console.log(data);
       alert('即将下载');
       setTimeout(function () {
-        window.location.href = 'https://hm.fujifilm.com.cn/xlsx/'+data.file_path;
+        window.location.href = 'https://hm.fujifilm.com.cn/xlsx/' + data.file_path;
       }, 4000);
     })
   }
   function saveChange() {
     var id = $('#order-id').val();
     var form = {
-        id: $('#order-id').val(),
-        productId: $('#product-id').val(),
-        cutomerId: $('#customer-id').val(),
-        status: $('#order-status').val(),
-        invoiceId: $('#invoice-id').val(),
-        horseId: $('#horse-id').val(),
-        total: $('#total').val(),
-        createTime: $('#create-time').val(),
-        updateTime: $('#update-time').val()
+      id: $('#order-id').val(),
+      productId: $('#product-id').val(),
+      customerId: $('#customer-id').val(),
+      status: $('#order-status').val(),
+      invoiceId: $('#invoice-id').val(),
+      horseId: $('#horse-id').val(),
+      total: $('#total').val(),
+      createTime: $('#create-time').val(),
+      updateTime: $('#update-time').val()
     };
     console.log(form);
-    $.post('/order/'+id, form, function (data, status) {
+    $.post('/order/' + id, form, function (data, status) {
       if (data.status == 'ok') {
-          alert('修改成功！');
-          setTimeout(function () {
-            window.location.reload();
-          }, 1000);
+        alert('修改成功！');
+        setTimeout(function () {
+          window.location.reload();
+        }, 1000);
       }
     })
   }
@@ -297,8 +304,8 @@
   }
   $(function () {
     if (typeof getParams('orderId') != 'undefined') {
-        var orders = '<%= JSON.stringify(orders)%>'
-        console.log(orders);
+      var orders = '<%= JSON.stringify(orders)%>'
+      console.log(orders);
     }
   })
 </script>

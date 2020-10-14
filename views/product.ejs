@@ -8,42 +8,44 @@
         <div class="card-header">
           <div class="card-title">商品列表</div>
         </div>
-        <div class="card-body table-responsive">
-          <table class="table table-head-bg-success table-hover">
+        <div class="card-body table-responsive" style="height: 500px;">
+          <table class="table table-head-bg-success table-hover table-condensed text-nowrap">
             <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">商品名</th>
-              <th scope="col">类别</th>
-              <th scope="col">价格</th>
-              <th scope="col">详情</th>
-              <th scope="col">缩略图</th>
-              <th scope="col">主图</th>
-              <th scope="col">详情图</th>
-              <th scope="col">促销</th>
-              <th scope="col">滚动播放</th>
-              <th scope="col">操作</th>
-            </tr>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">商品名</th>
+                <th scope="col">类别</th>
+                <th scope="col">价格</th>
+                <th scope="col">详情</th>
+                <th scope="col">缩略图</th>
+                <th scope="col">主图</th>
+                <th scope="col">详情图</th>
+                <th scope="col">促销</th>
+                <th scope="col">滚动播放</th>
+                <th scope="col">操作</th>
+              </tr>
             </thead>
             <tbody>
-            <% for (var i=0; i<products.length; i++) {%>
-            <tr>
-              <td><%= i+1%></td>
-              <td><%= products[i].name%></td>
-              <td><%= products[i].category%></td>
-              <td><%= products[i].price%></td>
-              <td><%= products[i].detail%></td>
-              <td><%= products[i].picThumb%></td>
-              <td><%= products[i].picMain%></td>
-              <td><%= products[i].picDetail%></td>
-              <td><%= products[i].promotion%></td>
-              <td><%= products[i].carousel%></td>
-              <td>
-                <button type="button" class="btn btn-danger" onclick="deleteProduct('<%= products[i].id%>')">删除</button>
-                <button type="button" class="btn btn-primary" onclick="modifyRow(<%= JSON.stringify(products[i])%>)">修改</button>
-              </td>
-            </tr>
-            <% }%>
+              <% for (var i=0; i<products.length; i++) {%>
+              <tr>
+                <td><%= i+1%></td>
+                <td><%= products[i].name%></td>
+                <td><%= products[i].category%></td>
+                <td><%= products[i].price%></td>
+                <td><%= products[i].detail%></td>
+                <td><%= products[i].picThumb%></td>
+                <td><%= products[i].picMain%></td>
+                <td><%= products[i].picDetail%></td>
+                <td><%= products[i].promotion%></td>
+                <td><%= products[i].carousel%></td>
+                <td>
+                  <button type="button" class="btn btn-danger"
+                    onclick="deleteProduct('<%= products[i].id%>')">删除</button>
+                  <button type="button" class="btn btn-primary"
+                    onclick="modifyRow(<%= JSON.stringify(products[i])%>)">修改</button>
+                </td>
+              </tr>
+              <% }%>
             </tbody>
           </table>
         </div>
@@ -95,9 +97,9 @@
             <input type="file" class="form-control" id="pic-detail" placeholder="" name="picDetail">
           </div>
           <div class="form-check">
-            <label>是否作为促销商品</label><br/>
+            <label>是否作为促销商品</label><br />
             <label class="form-radio-label">
-              <input class="form-radio-input" type="radio" name="promotion" value="0"  checked="">
+              <input class="form-radio-input" type="radio" name="promotion" value="0" checked="">
               <span class="form-radio-sign">否</span>
             </label>
             <label class="form-radio-label ml-3">
@@ -106,9 +108,9 @@
             </label>
           </div>
           <div class="form-check">
-            <label>是否作为滚动大图</label><br/>
+            <label>是否作为滚动大图</label><br />
             <label class="form-radio-label">
-              <input class="form-radio-input" type="radio" name="carousel" value="0"  checked="">
+              <input class="form-radio-input" type="radio" name="carousel" value="0" checked="">
               <span class="form-radio-sign">否</span>
             </label>
             <label class="form-radio-label ml-3">
@@ -140,8 +142,8 @@
     $('.ql-editor').html(json.detail);
     $('.modal-title').text('修改商品');
     $('#product-id').val(json.id);
-    $('input[name="promotion"][value="'+json.promotion+'"]').attr('checked', 'true');
-    $('input[name="carousel"][value="'+json.carousel+'"]').attr('checked', 'true');
+    $('input[name="promotion"][value="' + json.promotion + '"]').attr('checked', 'true');
+    $('input[name="carousel"][value="' + json.carousel + '"]').attr('checked', 'true');
     $('#modify').modal('show');
   }
   function addRow() {
@@ -150,7 +152,7 @@
   }
   function deleteProduct(id) {
     $.ajax({
-      url: 'https://hm.fujifilm.com.cn/product/'+id,
+      url: 'https://hm.fujifilm.com.cn/product/' + id,
       type: 'DELETE',
       contentType: "application/json",
       success: function (res) {
@@ -166,11 +168,11 @@
   }
   function generateExcel() {
     var table = 'product';
-    $.get('/gen_xlsx?table='+table, function (data) {
+    $.get('/gen_xlsx?table=' + table, function (data) {
       console.log(data);
       alert('即将下载');
       setTimeout(function () {
-        window.location.href = 'https://hm.fujifilm.com.cn/xlsx/'+data.file_path;
+        window.location.href = 'https://hm.fujifilm.com.cn/xlsx/' + data.file_path;
       }, 4000);
     })
   }
@@ -207,21 +209,21 @@
         success: function (res) {
           console.log(res);
           if (res == 'ok') {
-              alert('添加成功!');
-              window.location.reload();
+            alert('添加成功!');
+            window.location.reload();
           }
         }
       })
-//      $.post('/product', form, function (data, status) {
-//        if (data.status == 'ok') {
-//            alert('添加成功！');
-//            setTimeout(function () {
-//              window.location.reload();
-//            }, 1000);
-//        }
-//      })
+      //      $.post('/product', form, function (data, status) {
+      //        if (data.status == 'ok') {
+      //            alert('添加成功！');
+      //            setTimeout(function () {
+      //              window.location.reload();
+      //            }, 1000);
+      //        }
+      //      })
     } else {
-      $.post('/product/'+id, form, function(data, status) {
+      $.post('/product/' + id, form, function (data, status) {
         if (data.status == 'ok') {
           alert('修改成功！');
           setTimeout(function () {

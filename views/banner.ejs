@@ -1,24 +1,31 @@
 <div class="container-fluid">
-    <h4>滚动条管理</h4>
-    <div class="row">
-        <p style="padding-left: 50px;">由于小程序限制，暂时只支持文字颜色样式修改</p>
-    </div>
-    <div id="editor"><%= banner></div>
-    <button type="button" class="btn btn-default" id="submit">提交</button>
+  <h4>滚动条管理</h4>
+  <div class="row">
+    <p style="padding-left: 50px;">由于小程序限制，暂时只支持文字颜色样式修改</p>
+  </div>
+  <div id="editor" class="text">
+    <%= banner%>
+  </div>
+  <button type="button" class="btn btn-default" id="submit">提交</button>
 </div>
-<script>
-    var E = window.wangEditor;
-    var editor2 = new E('#editor');
-    editor2.create();
-    
-    $('#submit').click(function() {
-        console.log(editor2.txt.html());
-        var html = editor2.txt.html()
-        $.post('/banner', {data: html}, function(resp, data) {
-            console.log(resp, data);
-            if (resp == 'ok') {
-                alert('修改滚动条成功');
-            }
-        })
+<script type="text/javascript" src="//unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
+<script type="text/javascript">
+  const E = window.wangEditor;
+  const editor2 = new E('#editor');
+  editor2.create();
+
+  $('#submit').click(function () {
+    console.log(editor2.txt.html());
+    var html = editor2.txt.html();
+    const text = editor2.txt.text();
+    $.post('/banner', { data: html }, function (resp, data) {
+      console.log(resp, data);
+      if (resp == 'ok') {
+        alert('修改滚动条成功');
+        setTimeout(function () {
+          window.location.reload();
+        }, 1000);
+      }
     })
+  })
 </script>

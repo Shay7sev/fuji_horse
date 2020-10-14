@@ -6,43 +6,43 @@
         <div class="card-header">
           <div class="card-title">发票列表</div>
         </div>
-        <div class="card-body">
-          <table class="table table-head-bg-success table-hover">
+        <div class="card-body table-responsive" style="height: 500px;">
+          <table class="table table-head-bg-success table-hover table-condensed text-nowrap">
             <thead>
-            <tr>
-              <th scope="col">编号</th>
-              <th scope="col">客户ID</th>
-              <th scope="col">订单ID</th>
-              <th scope="col">发票抬头</th>
-              <th scope="col">发票税号</th>
-              <th scope="col">发票类型</th>
-              <th scope="col">发票金额</th>
-              <th scope="col">发票日期</th>
-              <th scope="col">寄送地址</th>
-              <th scope="col">开票状态</th>
-              <th scope="col">开票</th>
-            </tr>
+              <tr>
+                <th scope="col">编号</th>
+                <th scope="col">客户ID</th>
+                <th scope="col">订单ID</th>
+                <th scope="col">发票抬头</th>
+                <th scope="col">发票税号</th>
+                <th scope="col">发票类型</th>
+                <th scope="col">发票金额</th>
+                <th scope="col">发票日期</th>
+                <th scope="col">寄送地址</th>
+                <th scope="col">开票状态</th>
+                <th scope="col">开票</th>
+              </tr>
             </thead>
             <tbody>
-            <% for (var i=0; i<invs.length; i++) {%>
-            <tr>
-              <td><%= i+1%></td>
-              <td><%= invs[i].customerId%></td>
-              <td><%= invs[i].orderId%></td>
-              <td><%= invs[i].title%></td>
-              <td><%= invs[i].taxCode%></td>
-              <td><%= invs[i].invType%></td>
-              <td><%= invs[i].amount%></td>
-              <td><%= invs[i].date%></td>
-              <td><%= invs[i].address%></td>
-              <td><%= invs[i].status%></td>
-              <% if (invs[i].status == '未开票') {%>
-              <td>
-                <button type="button" class="btn btn-primary" onclick="invoke('<%= invs[i].id%>')">点击开票</button>
-              </td>
+              <% for (var i=0; i<invs.length; i++) {%>
+              <tr>
+                <td><%= i+1%></td>
+                <td><%= invs[i].customerId%></td>
+                <td><%= invs[i].orderId%></td>
+                <td><%= invs[i].title%></td>
+                <td><%= invs[i].taxCode%></td>
+                <td><%= invs[i].invType%></td>
+                <td><%= invs[i].amount%></td>
+                <td><%= invs[i].date%></td>
+                <td><%= invs[i].address%></td>
+                <td><%= invs[i].status%></td>
+                <% if (invs[i].status == '未开票') {%>
+                <td>
+                  <button type="button" class="btn btn-primary" onclick="invoke('<%= invs[i].id%>')">点击开票</button>
+                </td>
+                <% }%>
+              </tr>
               <% }%>
-            </tr>
-            <% }%>
             </tbody>
           </table>
         </div>
@@ -104,11 +104,11 @@
   }
   function generateExcel() {
     var table = 'customer';
-    $.get('/gen_xlsx?table='+table, function (data) {
+    $.get('/gen_xlsx?table=' + table, function (data) {
       console.log(data);
       alert('即将下载');
       setTimeout(function () {
-        window.location.href = 'https://hm.fujifilm.com.cn/xlsx/'+data.file_path;
+        window.location.href = 'https://hm.fujifilm.com.cn/xlsx/' + data.file_path;
       }, 4000);
     })
   }
@@ -120,7 +120,7 @@
       orderId: $('#order-id').val(),
       addressId: $('#address-id').val()
     }
-    $.post('/report/'+id, form, function(data, status) {
+    $.post('/report/' + id, form, function (data, status) {
       if (data.status == 'ok') {
         alert('修改成功！');
         setTimeout(function () {
@@ -131,8 +131,8 @@
   }
   function invoke(inv_id) {
     console.log(inv_id);
-    $.post('/inv_info/'+inv_id, {
-        status: '已开票'
+    $.post('/inv_info/' + inv_id, {
+      status: '已开票'
     }, function (data, status) {
       alert('ok');
       window.location.href = '/admin/invoices'
